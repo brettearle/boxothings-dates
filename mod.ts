@@ -3,18 +3,14 @@ interface DateAsNumberObj {
 }
 
 /**
- * Result type
- * @returns {boolean} ok - if the result is ok
- * @returns {T | null} value - the value of the result if ok
- * @returns {Error} err - the error of the result if !ok
+ * Returns the number of days since the given date.
+ * @warn Throws an error if the date is in the future.
+ * @warn Throws an error if the input is not a Date object.
  */
-interface Result<T> {
-  ok: boolean;
-  value: T | null;
-  err: Error | null;
-}
-
-const daysSince = (date: Date): number => {
+export const daysSince = (date: Date): number => {
+  if (!(date instanceof Date)) {
+    throw new Error("Not a Date object");
+  }
   if (date > new Date()) {
     throw new Error("Date is in the future");
   }
@@ -25,7 +21,11 @@ const daysSince = (date: Date): number => {
   return daysSince;
 };
 
-const daysBetween = (date1: Date, date2: Date): number => {
+/**
+ * This returns the difference in days between two dates.
+ * Regardless of the order of the dates, the result will always be positive.
+ */
+export const daysBetween = (date1: Date, date2: Date): number => {
   const dateOne: DateAsNumberObj = {
     day: date1.getDate(),
   };
@@ -33,8 +33,7 @@ const daysBetween = (date1: Date, date2: Date): number => {
   const dateTwo: DateAsNumberObj = {
     day: date2.getDate(),
   };
-
-  return dateTwo.day - dateOne.day;
+  const greaterDate = dateOne.day > dateTwo.day ? dateOne.day : dateTwo.day;
+  const lesserDate = dateOne.day < dateTwo.day ? dateOne.day : dateTwo.day;
+  return greaterDate - lesserDate;
 };
-
-export { daysBetween, daysSince };
