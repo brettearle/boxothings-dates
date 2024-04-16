@@ -33,6 +33,7 @@ export const daysBetween = (date1: Date, date2: Date): number => {
   const dateTwo: DateAsNumberObj = {
     day: date2.getDate(),
   };
-
-  return dateTwo.day - dateOne.day;
+  const greaterDate = dateOne.day > dateTwo.day ? dateOne.day : dateTwo.day;
+  const lesserDate = dateOne.day < dateTwo.day ? dateOne.day : dateTwo.day;
+  return greaterDate - lesserDate;
 };
