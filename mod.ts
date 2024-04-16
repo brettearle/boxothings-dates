@@ -4,8 +4,8 @@ interface DateAsNumberObj {
 
 /**
  * Returns the number of days since the given date.
- * Throws an error if the date is in the future.
- * Throws an error if the input is not a Date object.
+ * @warn Throws an error if the date is in the future.
+ * @warn Throws an error if the input is not a Date object.
  */
 export const daysSince = (date: Date): number => {
   if (!(date instanceof Date)) {
