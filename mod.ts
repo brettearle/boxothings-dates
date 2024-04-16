@@ -2,7 +2,10 @@ interface DateAsNumberObj {
   day: number;
 }
 
-const daysSince = (date: Date): number => {
+export const daysSince = (date: Date): number => {
+  if (!(date instanceof Date)) {
+    throw new Error("Not a Date object");
+  }
   if (date > new Date()) {
     throw new Error("Date is in the future");
   }
@@ -13,7 +16,7 @@ const daysSince = (date: Date): number => {
   return daysSince;
 };
 
-const daysBetween = (date1: Date, date2: Date): number => {
+export const daysBetween = (date1: Date, date2: Date): number => {
   const dateOne: DateAsNumberObj = {
     day: date1.getDate(),
   };
@@ -24,5 +27,3 @@ const daysBetween = (date1: Date, date2: Date): number => {
 
   return dateTwo.day - dateOne.day;
 };
-
-export { daysBetween, daysSince };
