@@ -6,5 +6,4 @@
     "dev": "deno run --watch mod.ts",
     "test": "deno test --watch"
   }
-  
 }
