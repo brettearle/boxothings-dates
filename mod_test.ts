@@ -4,7 +4,7 @@ import { daysBetween, daysSince } from "./mod.ts";
 const test = Deno.test;
 
 /**
- * Date Since
+ * Days Since
  */
 test("get days since from date", () => {
   const date = new Date("2020-01-01T00:00:00Z");
@@ -30,6 +30,27 @@ test("should throw error if date is in the future", () => {
 test("should throw if not a Date object", () => {
   // @ts-ignore: intentionally passing a string
   assertThrows(() => daysSince("rubbish string"), Error, "Not a Date object");
+});
+
+test("should take a second arg to set timezone", () => {
+  const date = new Date("2020-01-01T00:00:00Z");
+  const daysSinceExpect = Math.floor(
+    (new Date().getTime() - date.getTime()) /
+      (1000 * 60 * 60 * 24),
+  );
+  const got = daysSince(date, "UTC");
+  assertEquals(got, daysSinceExpect);
+});
+
+test("should return days since in local timezone", () => {
+  const date = new Date("2020-01-01T00:00:00Z");
+  const daysSinceExpect = Math.floor(
+    (new Date().getTime() - date.getTime() +
+      (date.getTimezoneOffset() * 1000)) /
+      (1000 * 60 * 60 * 24),
+  );
+  const got = daysSince(date, "local");
+  assertEquals(got, daysSinceExpect);
 });
 
 /**
